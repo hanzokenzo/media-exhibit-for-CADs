@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WE'RE ALL UNSEEN</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #e8130a;
+    --hot: #ff4500;
+    --green: #39ff14;
+    --yellow: #f5c518;
+    --dark: #080808;
+    --white: #f0ede6;
+    --cream: #d4c9a8;
+  }
+
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  body { background: var(--dark); font-family: 'Space Mono', monospace; overflow-x: hidden; }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35;
+  }
+
+  .page {
+    position: relative; width: 100%; min-height: 100vh;
+    scroll-snap-align: start; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 60px 48px 100px;
+  }
+
+  /* ── BLOBS ── */
+  .thermal-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); mix-blend-mode: screen; opacity: 0.55;
+    animation: drift 8s ease-in-out infinite alternate;
+  }
+  @keyframes drift { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(20px,-30px) scale(1.08)} }
+
+  .p1 .blob1 { width:380px;height:520px;background:radial-gradient(circle,#e8130a 0%,transparent 70%);top:-80px;left:10%;animation-delay:-1s; }
+  .p1 .blob2 { width:260px;height:400px;background:radial-gradient(circle,#39ff14 0%,transparent 70%);top:50px;left:38%;animation-delay:-3s; }
+  .p1 .blob3 { width:200px;height:300px;background:radial-gradient(circle,#f5c518 0%,transparent 70%);top:120px;left:55%;animation-delay:-5s; }
+  .p2 .blob1 { width:300px;height:450px;background:radial-gradient(circle,#39ff14 0%,transparent 70%);bottom:-60px;right:5%;animation-delay:-2s; }
+  .p2 .blob2 { width:220px;height:350px;background:radial-gradient(circle,#e8130a 0%,transparent 70%);bottom:40px;right:30%;animation-delay:-4s; }
+  .p3 .blob1 { width:340px;height:500px;background:radial-gradient(circle,#e8130a 0%,transparent 70%);top:20%;left:-5%;animation-delay:-1.5s; }
+  .p3 .blob2 { width:180px;height:260px;background:radial-gradient(circle,#f5c518 0%,transparent 70%);top:10%;right:10%;animation-delay:-3.5s; }
+  .p4 .blob1 { width:420px;height:580px;background:radial-gradient(circle,#39ff14 0%,transparent 70%);top:-100px;right:-60px;animation-delay:-2s; }
+  .p4 .blob2 { width:200px;height:300px;background:radial-gradient(circle,#e8130a 0%,transparent 70%);bottom:60px;left:15%;animation-delay:-5s; }
+  .p5 .blob1 { width:260px;height:400px;background:radial-gradient(circle,#ff4500 0%,transparent 70%);top:30%;left:50%;animation-delay:-3s; }
+  .p5 .blob2 { width:300px;height:420px;background:radial-gradient(circle,#e8130a 0%,transparent 70%);bottom:-40px;left:-30px;animation-delay:-1s; }
+  .p6 .blob1 { width:360px;height:480px;background:radial-gradient(circle,#39ff14 0%,transparent 70%);top:0;left:20%;animation-delay:-4s; }
+  .p6 .blob2 { width:200px;height:280px;background:radial-gradient(circle,#f5c518 0%,transparent 70%);bottom:80px;right:10%;animation-delay:-2s; }
+  .p7 .blob1 { width:300px;height:450px;background:radial-gradient(circle,#e8130a 0%,transparent 70%);top:10%;right:5%;animation-delay:-1s; }
+  .p7 .blob2 { width:240px;height:360px;background:radial-gradient(circle,#39ff14 0%,transparent 70%);bottom:0;left:5%;animation-delay:-5s; }
+  .p8 .blob1 { width:400px;height:540px;background:radial-gradient(circle,#ff4500 0%,transparent 70%);top:-60px;left:-40px;animation-delay:-3s; }
+  .p8 .blob2 { width:220px;height:320px;background:radial-gradient(circle,#39ff14 0%,transparent 70%);bottom:20px;right:20%;animation-delay:-1.5s; }
+  .p9 .blob1 { width:300px;height:420px;background:radial-gradient(circle,#f5c518 0%,transparent 70%);top:20%;left:10%;animation-delay:-2s; }
+  .p9 .blob2 { width:260px;height:380px;background:radial-gradient(circle,#e8130a 0%,transparent 70%);bottom:0;right:0;animation-delay:-4s; }
+  .p10 .blob1 { width:380px;height:520px;background:radial-gradient(circle,#e8130a 0%,transparent 70%);top:0;left:0;animation-delay:-1s; }
+  .p10 .blob2 { width:280px;height:400px;background:radial-gradient(circle,#39ff14 0%,transparent 70%);top:50px;left:32%;animation-delay:-3s; }
+  .p10 .blob3 { width:200px;height:300px;background:radial-gradient(circle,#f5c518 0%,transparent 70%);bottom:80px;right:8%;animation-delay:-5s; }
+
+  /* ── SCAN LINE ── */
+  .scanline {
+    position:absolute; left:0; right:0; height:2px;
+    background:linear-gradient(90deg,transparent,var(--green),transparent);
+    opacity:0.15; animation:scan 6s linear infinite; z-index:3; pointer-events:none;
+  }
+  @keyframes scan { 0%{top:-2px} 100%{top:100%} }
+
+  /* ── PHOTO LAYER ── */
+  .page-photo {
+    position: absolute; z-index: 1;
+    object-fit: cover;
+  }
+
+  /* ── CONTENT ── */
+  .content { position:relative; z-index:2; }
+
+  .pg-num {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(120px,22vw,220px);
+    line-height:0.85; color:rgba(255,255,255,0.04);
+    position:absolute; z-index:1; user-select:none; pointer-events:none;
+  }
+  .eyebrow {
+    font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.35em; text-transform:uppercase;
+    color:var(--cream); opacity:0.6; margin-bottom:20px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow::before { content:''; display:inline-block; width:32px; height:1px; background:currentColor; }
+  .stanza {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(18px,3.2vw,32px); line-height:1.55;
+    color:var(--white); max-width:680px; font-weight:400;
+  }
+  .stanza em { font-style:italic; color:var(--yellow); }
+  .stanza strong { font-style:italic; font-weight:900; color:var(--white); }
+  .stanza.quoted {
+    font-size:clamp(22px,3.8vw,40px); font-style:italic; font-weight:700;
+    color:var(--yellow); border-left:3px solid var(--red);
+    padding-left:28px; line-height:1.4;
+  }
+  .display-title {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(52px,12vw,130px);
+    line-height:0.9; letter-spacing:0.02em; color:var(--white); text-transform:uppercase;
+  }
+  .display-title .accent { color:var(--red); }
+  .display-title .green  { color:var(--green); }
+  .sidebar-text {
+    position:absolute; right:24px; top:50%;
+    transform:translateY(-50%) rotate(90deg);
+    font-family:'Space Mono',monospace; font-size:9px;
+    letter-spacing:0.4em; text-transform:uppercase;
+    color:rgba(255,255,255,0.2); white-space:nowrap; z-index:2;
+  }
+  .accent-bar { width:48px; height:4px; background:var(--red); margin-bottom:24px; display:block; }
+  .divider { width:100%; height:1px; background:linear-gradient(90deg,var(--red),transparent); margin:32px 0; opacity:0.4; }
+  .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
+  .bg-word {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(80px,18vw,200px); line-height:0.85;
+    position:absolute; z-index:1; user-select:none; pointer-events:none;
+    -webkit-text-stroke:1px rgba(255,255,255,0.08); color:transparent; text-transform:uppercase;
+  }
+  .cover { background:#060606; justify-content:flex-end; padding-bottom:80px; }
+
+  /* ── FADE IN ── */
+  .fade-in { opacity:0; transform:translateY(30px); transition:opacity 0.9s ease,transform 0.9s ease; }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+  .fade-in:nth-child(2){transition-delay:0.15s}
+  .fade-in:nth-child(3){transition-delay:0.3s}
+  .fade-in:nth-child(4){transition-delay:0.45s}
+
+  /* ── PAGE INDICATOR ── */
+  .page-indicator {
+    position:fixed; right:20px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:8px; z-index:100;
+  }
+  .page-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(255,255,255,0.2);
+    transition:background 0.3s,transform 0.3s; cursor:pointer;
+  }
+  .page-dot.active { background:var(--red); transform:scale(1.5); }
+
+  /* ── DOWNLOAD BAR ── */
+  .dl-bar {
+    position:absolute; bottom:0; left:0; right:0; height:52px;
+    background:rgba(0,0,0,0.7); display:flex; align-items:center;
+    justify-content:flex-end; padding:0 24px; gap:12px; z-index:50;
+    border-top:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(6px);
+  }
+  .dl-btn {
+    font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--white); background:var(--red);
+    border:none; padding:8px 18px; cursor:pointer;
+    border-radius:2px; transition:background 0.2s,transform 0.1s;
+    display:flex; align-items:center; gap:8px;
+  }
+  .dl-btn:hover { background:#ff2a20; }
+  .dl-btn:active { transform:scale(0.97); }
+  .dl-btn svg { width:13px; height:13px; }
+  .dl-label {
+    font-family:'Space Mono',monospace; font-size:9px;
+    letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,255,255,0.25);
+  }
+  .dl-overlay {
+    display:none; position:absolute; inset:0; background:rgba(0,0,0,0.7); z-index:200;
+    align-items:center; justify-content:center;
+    font-family:'Space Mono',monospace; font-size:11px;
+    letter-spacing:0.3em; color:var(--green); text-transform:uppercase;
+  }
+  .dl-overlay.show { display:flex; }
+
+  @media(max-width:640px){
+    .page{padding:48px 28px 90px;}
+    .grid-2col{grid-template-columns:1fr;gap:28px;}
+    .sidebar-text{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="page-indicator">
+  <div class="page-dot active" onclick="goTo(0)"></div>
+  <div class="page-dot" onclick="goTo(1)"></div>
+  <div class="page-dot" onclick="goTo(2)"></div>
+  <div class="page-dot" onclick="goTo(3)"></div>
+  <div class="page-dot" onclick="goTo(4)"></div>
+  <div class="page-dot" onclick="goTo(5)"></div>
+  <div class="page-dot" onclick="goTo(6)"></div>
+  <div class="page-dot" onclick="goTo(7)"></div>
+  <div class="page-dot" onclick="goTo(8)"></div>
+  <div class="page-dot" onclick="goTo(9)"></div>
+</nav>
+
+<!-- PAGE 1 — COVER -->
+<section class="page cover p1" id="page-0">
+  <div class="thermal-bg">
+    <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+  </div>
+  <div class="scanline"></div>
+  <!-- image1.jpg — full bleed background, behind title -->
+  <img src="image1.jpg" class="page-photo" style="inset:0;width:100%;height:100%;mix-blend-mode:luminosity;opacity:0.25;">
+  <span class="pg-num" style="bottom:-40px;left:-20px;">1</span>
+  <div class="content">
+    <div class="eyebrow fade-in">Exhibit Proposal &nbsp;·&nbsp; Digital Pubmat &nbsp;·&nbsp; 2025</div>
+    <div class="display-title fade-in">WE'RE<br><span class="accent">ALL</span><br><span class="green">UN</span>SEEN</div>
+    <div class="divider fade-in"></div>
+    <p class="stanza fade-in" style="font-size:clamp(13px,2vw,17px);opacity:0.55;letter-spacing:0.1em;font-family:'Space Mono',monospace;text-transform:uppercase;">
+      A poem on corruption · pollution · unjustified killings
+    </p>
+  </div>
+  <div class="sidebar-text">We're All Unseen — Exhibit 2025</div>
+  <div class="dl-overlay" id="dl-overlay-0">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 1 / Cover</span>
+    <button class="dl-btn" onclick="downloadPage(0)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 2 — Opening -->
+<section class="page p2" id="page-1">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="scanline"></div>
+  <span class="bg-word" style="bottom:-20px;right:-20px;-webkit-text-stroke:1px rgba(232,19,10,0.12);">UNSEEN</span>
+  <!-- image2.jpg — right side vertical strip (right 38% of page) -->
+  <img src="image2.jpg" class="page-photo" style="right:0;top:0;bottom:52px;width:38%;height:calc(100% - 52px);mix-blend-mode:multiply;opacity:0.5;">
+  <div class="content" style="max-width:58%;">
+    <div class="eyebrow fade-in">I &nbsp;·&nbsp; Opening</div>
+    <span class="accent-bar fade-in"></span>
+    <p class="stanza fade-in">
+      THERE IS NO SUCH THING AS<br>
+      <em>IGNORANCE IS BLISS</em><br>
+      FOR WHAT'S BENEATH TO THEIR SO-CALLED HIERARCHY<br>
+      ARE THE PEOPLE THEY VIEW AS PESTS
+    </p>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-1">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 2 / I — Opening</span>
+    <button class="dl-btn" onclick="downloadPage(1)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 3 — Pestilence -->
+<section class="page p3" id="page-2">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="scanline"></div>
+  <span class="pg-num" style="top:20px;right:30px;">3</span>
+  <!-- image3.jpg — bottom horizontal strip (lower 30% of page) -->
+  <img src="image3.jpg" class="page-photo" style="left:0;right:0;bottom:52px;width:100%;height:30%;mix-blend-mode:screen;opacity:0.3;">
+  <div class="content grid-2col">
+    <div>
+      <div class="eyebrow fade-in">II &nbsp;·&nbsp; Pestilence</div>
+      <span class="accent-bar fade-in"></span>
+      <p class="stanza fade-in">
+        SLAVES OF THEIR ROT<br><em>NAMED PESTILENCE</em><br>
+        AS THEY'RE SWALLOWING MORE<br>PRIDE AND POWER<br>
+        WHILE THEY LET THEIR PEOPLE<br><strong>STARVE IN SILENCE</strong>
+      </p>
+    </div>
+    <div style="border-left:1px solid rgba(255,255,255,0.08);padding-left:40px;">
+      <p class="stanza fade-in" style="opacity:0.3;font-size:clamp(11px,1.5vw,14px);font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.2em;line-height:2;">
+        Corruption<br>·<br>Power<br>·<br>Hunger<br>·<br>Silence
+      </p>
+    </div>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-2">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 3 / II — Pestilence</span>
+    <button class="dl-btn" onclick="downloadPage(2)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 4 — The Cry -->
+<section class="page p4" id="page-3" style="background:#0a0a0a;">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="scanline"></div>
+
+  <!-- GHOSTED ARTICLE BACKGROUND -->
+  <div style="position:absolute;inset:0;bottom:52px;z-index:1;overflow:hidden;pointer-events:none;padding:32px 44px 32px;">
+    <p style="font-family:'Space Mono',monospace;font-size:clamp(7.5px,1.05vw,11px);color:rgba(255,255,255,0.08);line-height:2.4;letter-spacing:0.03em;text-align:justify;width:100%;">
+      Rapid urbanization and the inadequate infrastructure and basic services in large towns and cities have led to the proliferation of <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.06em;">SLUMS</span> and informal settlements in the country. While <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">POVERTY</span> incidence of population in key metropolitan centers is on average 17% compared to the national average of 32%, slum population has been exponentially rising at an average rate of 3.4% annually. In Metro Manila, an estimated 37% of population — over 4.0 million Filipinos — live in slums in 2010 and slum population growth rate is at 8% annually. These slum dwellers and informal settlers confront on a daily basis another dimension of poverty which is environmental <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">DEPRIVATION.</span> The underserviced and bad living conditions in slums impact on health, livelihood and the social fiber. The effects of urban environmental problems and threats of climate change are most pronounced in slums due to their hazardous location, poor air and <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">POLLUTION,</span> weak disaster risk management and limited coping strategies of households. Slums are characterized by poor sanitation, overcrowded and crude habitation, inadequate water supply, hazardous location and insecurity of tenure. The people living in slums are highly vulnerable to different forms of risks — both natural and man-made. Studies show that slum poverty puts major stress on people's lives through noise, stagnant water, <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">CONGESTION</span> and <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">FLOODING.</span> Households living in these poor environs pay more for basic services, have poorer health status, lower productivity and are vulnerable to crimes and violence. Possible trade-offs exist between bad housing and medical care and between bad housing and education. Bad living environment deepens poverty, increases the vulnerability of both the poor and non-poor living in slums, and excludes the slum poor from growth. By 2050, slum population in Metro Manila alone will have reached over 9 million — people rendered <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">INVISIBLE</span> by the very systems built to serve them. The rising population in slums shows that inequality is rising and growth has not been inclusive. Improving slums would not only impact on <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">POVERTY</span> reduction but also bring about growth due to higher productivity of labor. Slum poverty cannot be addressed through traditional programs alone because bad housing significantly lowers the health status of households — especially <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">CHILDREN.</span> These are the <span style="font-family:'Bebas Neue',sans-serif;font-size:1.9em;color:rgba(255,255,255,0.11);vertical-align:middle;letter-spacing:0.05em;">UNSEEN.</span>
+    </p>
+  </div>
+  <!-- END GHOSTED BACKGROUND -->
+
+  <span class="bg-word" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;font-size:clamp(100px,25vw,280px);">HEAR</span>
+  <!-- image4.jpg — left edge vertical strip (leftmost 22% of page) -->
+  <img src="image4.jpg" class="page-photo" style="left:0;top:0;bottom:52px;width:22%;height:calc(100% - 52px);mix-blend-mode:screen;opacity:0.35;">
+  <div class="content" style="max-width:600px;margin:0 auto;text-align:center;">
+    <div class="eyebrow fade-in" style="justify-content:center;">III &nbsp;·&nbsp; The Cry</div>
+    <p class="stanza quoted fade-in" style="border-left:none;padding-left:0;text-align:center;border-top:3px solid var(--red);border-bottom:3px solid var(--red);padding:32px 0;">
+      "—HEAR WHAT WE AGONIZE"
+    </p>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-3">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 4 / III — The Cry</span>
+    <button class="dl-btn" onclick="downloadPage(3)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 5 — The Caldero -->
+<section class="page p5" id="page-4">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="scanline"></div>
+  <span class="pg-num" style="bottom:-20px;left:-10px;">5</span>
+  <!-- image5.jpg — top-right corner (right 40%, top 45% of page) -->
+  <img src="image5.jpg" class="page-photo" style="right:0;top:0;width:40%;height:45%;mix-blend-mode:luminosity;opacity:0.4;">
+  <div class="content" style="max-width:58%;">
+    <div class="eyebrow fade-in">IV &nbsp;·&nbsp; The Caldero</div>
+    <span class="accent-bar fade-in"></span>
+    <p class="stanza fade-in">
+      <em>"FEEL WHAT WE KNEEL TO SOW OUR RICE"</em><br>
+      AS THE UNWITNESSED CRIES OF YOUR PEOPLE<br>
+      ENTRAPPED IN A <strong>RED-HOT CALDERO</strong>
+    </p>
+    <div class="divider fade-in"></div>
+    <p class="stanza quoted fade-in">
+      "NO THERMOMETER CAN MEASURE<br>
+      THE ACHE OF OUR SEARING HEARTS<br>
+      SEEN THROUGH THE THERMAL-FILTERS"
+    </p>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-4">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 5 / IV — The Caldero</span>
+    <button class="dl-btn" onclick="downloadPage(4)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 6 — Media & Death -->
+<section class="page p6" id="page-5" style="background:#090909;">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="scanline"></div>
+  <span class="bg-word" style="top:-30px;right:-20px;-webkit-text-stroke:1px rgba(57,255,20,0.07);">NOISE</span>
+  <!-- image6.jpg — right 70% of page as background panel -->
+  <img src="image6.jpg" class="page-photo" style="left:30%;right:0;top:0;bottom:52px;width:70%;height:calc(100% - 52px);mix-blend-mode:screen;opacity:0.2;">
+  <div class="content" style="max-width:60%;">
+    <div class="eyebrow fade-in">V &nbsp;·&nbsp; Media & Death</div>
+    <span class="accent-bar fade-in" style="background:var(--green);"></span>
+    <p class="stanza fade-in">
+      CORNERED BY THE <em>MEDIA'S NOISE</em><br>
+      AS EACH LIFE TAKEN,<br>
+      <strong>THEIR NAMES ARE FORGOTTEN</strong><br>
+      THE SICKNESS PREVAILS,<br>
+      AS THE NOOSE TIGHTENS
+    </p>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-5">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 6 / V — Media & Death</span>
+    <button class="dl-btn" onclick="downloadPage(5)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 7 — The Crown -->
+<section class="page p7" id="page-6">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="scanline"></div>
+  <!-- image7.jpg — full bleed background behind quote -->
+  <img src="image7.jpg" class="page-photo" style="inset:0;width:100%;height:100%;mix-blend-mode:multiply;opacity:0.3;">
+  <div class="content" style="max-width:640px;">
+    <div class="eyebrow fade-in">VI &nbsp;·&nbsp; The Crown</div>
+    <p class="stanza quoted fade-in">
+      "NUMBING UNDER THE BLAME<br>OF OUR FEVER,<br>
+      YOUR CROWN SHIMMERS<br>AFTER THEIR DEATHS<br>
+      TO HIDE THEIR PERFECT<br><span style="color:var(--red);">RUTHLESS KINGS</span>"
+    </p>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-6">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 7 / VI — The Crown</span>
+    <button class="dl-btn" onclick="downloadPage(6)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 8 — Haunting -->
+<section class="page p8" id="page-7" style="background:#080808;">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="scanline"></div>
+  <span class="pg-num" style="top:-10px;left:-10px;">8</span>
+  <!-- image8.jpg — right side vertical strip (right 35% of page) -->
+  <img src="image8.jpg" class="page-photo" style="right:0;top:0;bottom:52px;width:35%;height:calc(100% - 52px);mix-blend-mode:screen;opacity:0.35;">
+  <div class="content" style="max-width:62%;">
+    <div class="eyebrow fade-in">VII &nbsp;·&nbsp; Haunting</div>
+    <span class="accent-bar fade-in"></span>
+    <p class="stanza fade-in">
+      UNTIL THEY WERE <em>DETHRONED</em><br>
+      THESE CORPSES WILL <strong>DRAG YOUR FEET</strong><br>
+      UNTIL THEIR GRAVES HAUNT YOUR SENSES
+    </p>
+    <div class="divider fade-in"></div>
+    <p class="stanza quoted fade-in">
+      "OUR EVERYDAY SIGHS<br>SEEPS THROUGH THEIR LIES<br>
+      AS THE AIR TURNS <span style="color:var(--red);">RED</span>"
+    </p>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-7">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 8 / VII — Haunting</span>
+    <button class="dl-btn" onclick="downloadPage(7)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 9 — Cinders -->
+<section class="page p9" id="page-8">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+  <div class="scanline"></div>
+  <span class="bg-word" style="bottom:-30px;right:-10px;-webkit-text-stroke:1px rgba(245,197,24,0.08);">ASHES</span>
+  <!-- image9.jpg — left side vertical strip (left 30% of page) -->
+  <img src="image9.jpg" class="page-photo" style="left:0;top:0;bottom:52px;width:30%;height:calc(100% - 52px);mix-blend-mode:luminosity;opacity:0.35;">
+  <div class="content grid-2col" style="gap:60px;align-items:start;margin-left:32%;">
+    <div>
+      <div class="eyebrow fade-in">VIII &nbsp;·&nbsp; Cinders</div>
+      <span class="accent-bar fade-in" style="background:var(--yellow);"></span>
+      <p class="stanza fade-in">
+        UNTIL THE TRUTH<br>BECOME <em>CINDERS</em><br>
+        OF PEOPLE OPPRESSED<br>BY THE RULERS
+      </p>
+    </div>
+    <div style="padding-top:60px;">
+      <p class="stanza fade-in">UNTIL THEIR <strong>ASHES RUN COLD</strong></p>
+    </div>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-8">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 9 / VIII — Cinders</span>
+    <button class="dl-btn" onclick="downloadPage(8)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<!-- PAGE 10 — Closing -->
+<section class="page p10" id="page-9" style="background:#050505;justify-content:center;">
+  <div class="thermal-bg"><div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div></div>
+  <div class="scanline"></div>
+  <!-- image10.jpg — full bleed background behind closing title -->
+  <img src="image10.jpg" class="page-photo" style="inset:0;width:100%;height:100%;mix-blend-mode:luminosity;opacity:0.2;">
+  <div class="content" style="text-align:center;max-width:600px;margin:0 auto;">
+    <div class="eyebrow fade-in" style="justify-content:center;">End &nbsp;·&nbsp; Fin</div>
+    <div class="display-title fade-in" style="font-size:clamp(40px,9vw,100px);margin-bottom:32px;">
+      WE'RE<br><span class="accent">ALL</span><br><span class="green">UN</span>SEEN
+    </div>
+    <p class="stanza fade-in" style="font-size:clamp(11px,1.6vw,14px);font-family:'Space Mono',monospace;opacity:0.4;letter-spacing:0.2em;text-transform:uppercase;line-height:2;">
+      A poem on modern issues<br>
+      Corruption · Pollution · Unjustified Killings<br>
+      Digital Exhibit Proposal · 2025
+    </p>
+    <div class="divider fade-in" style="margin-top:40px;"></div>
+    <p class="stanza fade-in" style="font-size:11px;opacity:0.25;font-family:'Space Mono',monospace;margin-top:20px;letter-spacing:0.15em;">
+      THERMAL VISION / HEAT OF TRUTH / THE UNSEEN PEOPLE
+    </p>
+  </div>
+  <div class="sidebar-text">We're All Unseen</div>
+  <div class="dl-overlay" id="dl-overlay-9">Capturing page…</div>
+  <div class="dl-bar">
+    <span class="dl-label">Page 10 / Closing</span>
+    <button class="dl-btn" onclick="downloadPage(9)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/></svg>
+      Download PNG
+    </button>
+  </div>
+</section>
+
+<script>
+const fadeEls = document.querySelectorAll('.fade-in');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+fadeEls.forEach(el => obs.observe(el));
+
+const pages = document.querySelectorAll('.page');
+const dots  = document.querySelectorAll('.page-dot');
+const pageObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting && e.intersectionRatio >= 0.5){
+      const idx = [...pages].indexOf(e.target);
+      dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    }
+  });
+}, { threshold: 0.5 });
+pages.forEach(p => pageObs.observe(p));
+function goTo(idx){ pages[idx].scrollIntoView({behavior:'smooth'}); }
+
+async function downloadPage(idx) {
+  const page = pages[idx];
+  const overlay = document.getElementById('dl-overlay-' + idx);
+  overlay.classList.add('show');
+  try {
+    const canvas = await html2canvas(page, {
+      scale: 2, useCORS: true, allowTaint: true,
+      backgroundColor: null,
+      width: page.offsetWidth, height: page.offsetHeight,
+      ignoreElements: el => el.classList.contains('dl-overlay') || el.classList.contains('page-indicator'),
+      onclone: (clonedDoc) => {
+        // Remove the body::before SVG noise pattern — it causes a 0×0 canvas
+        // error in html2canvas's createPattern call
+        const style = clonedDoc.createElement('style');
+        style.textContent = 'body::before { display: none !important; }';
+        clonedDoc.head.appendChild(style);
+      }
+    });
+    const link = document.createElement('a');
+    link.download = 'unseen-page-' + (idx + 1) + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch(err) {
+    alert('Download failed: ' + err.message);
+  } finally {
+    overlay.classList.remove('show');
+  }
+}
+</script>
+</body>
+</html>
