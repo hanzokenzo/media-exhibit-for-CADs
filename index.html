@@ -20,18 +20,8 @@
     --cream: #d4c9a8;
   }
 
-  html, body { 
-  height: 100%; 
-  scroll-snap-type: y mandatory; 
-  scroll-behavior: smooth; 
-  }
-  
-  body { 
-  background: var(--dark); 
-  font-family: 'Space Mono', monospace; 
-  overflow-x: hidden;
-  overflow-y: hidden;
-  }
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  body { background: var(--dark); font-family: 'Space Mono', monospace; overflow-x: hidden; }
   
   body::before {
     content: '';
